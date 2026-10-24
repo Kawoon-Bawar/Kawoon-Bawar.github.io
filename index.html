@@ -124,6 +124,22 @@ section.block{padding-block:72px;border-bottom:1px solid var(--rule)}
 footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;padding-block:36px;font-family:var(--mono);font-size:12px;color:var(--ink-3)}
 footer strong{color:var(--ink);font-family:var(--sans);font-size:14px;font-weight:600}
 
+/* Case study extras */
+.role{display:grid;grid-template-columns:170px minmax(0,1fr);gap:24px;margin-top:24px;padding:14px 0;border-top:1.5px solid var(--ink);border-bottom:1px solid var(--rule);font-size:14px}
+.role dt{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);padding-top:1px}
+.role dd{margin:0;font-weight:500}
+.sheet section .txt p{margin:0 0 12px}
+.sheet section .txt p:last-child{margin-bottom:0}
+.sheet section .txt strong{color:var(--ink);font-weight:600}
+.figs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:8px}
+.figs figure{margin:0;border:1px solid var(--rule);background:var(--bg)}
+.figs figure:first-child{grid-column:1/-1}
+.figs img{width:100%;height:220px;object-fit:contain;background:#fff;border-bottom:1px solid var(--rule)}
+.figs figure:first-child img{height:380px}
+.figs figcaption{padding:10px 12px;font-size:13px;line-height:1.5;color:var(--ink-2)}
+.figs figcaption b{font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.06em;color:var(--ink-3);margin-right:6px}
+.figs-head{margin:28px 0 12px}
+
 /* Case study dialog */
 dialog{border:0;padding:0;background:transparent;width:min(860px,calc(100% - 24px));max-height:92vh;color:var(--ink)}
 dialog::backdrop{background:rgba(30,41,59,.55);backdrop-filter:blur(2px)}
@@ -154,7 +170,9 @@ dialog::backdrop{background:rgba(30,41,59,.55);backdrop-filter:blur(2px)}
   .thumb{display:none}
   .about{grid-template-columns:1fr;gap:40px}
   .sheet-body{padding:24px 20px 28px}
-  .sheet section{grid-template-columns:1fr;gap:6px}
+  .sheet section,.role{grid-template-columns:1fr;gap:6px}
+  .figs{grid-template-columns:1fr}
+  .figs figure:first-child img,.figs img{height:240px}
   .sheet h2{font-size:26px}
 }
 @media(max-width:560px){
@@ -258,9 +276,11 @@ dialog::backdrop{background:rgba(30,41,59,.55);backdrop-filter:blur(2px)}
       <div id="d-chip"></div>
       <h2 id="d-title"></h2>
       <p class="lead" id="d-summary"></p>
+      <div id="d-role"></div>
       <div id="d-image"></div>
       <div class="tags" id="d-tools"></div>
       <div id="d-sections"></div>
+      <div id="d-gallery"></div>
       <div id="d-link"></div>
     </div>
   </div>
@@ -283,8 +303,15 @@ dialog::backdrop{background:rgba(30,41,59,.55);backdrop-filter:blur(2px)}
              'Engineering & research', 'Software, data & AI'
    tools     comma-separated; each becomes a tag
    link      optional web link (report, GitHub, video). '' for none.
-   image     optional picture. Upload it into an images folder, then
-             write e.g. 'images/archery.jpg'. '' for none.
+   role      your role, shown at the top of the case study. '' to hide.
+   image     cover picture (shown in the project list), e.g.
+             'images/archery.jpg'. '' for none.
+   gallery   pictures shown inside the case study, each written as
+             {src:'images/photo.jpg', caption:'What it shows.'},
+             Leave as [] for none.
+   In the text, a blank line (\n\n) starts a new paragraph, and a
+   paragraph that starts with a short phrase and a full stop, like
+   'Circuit. ...', shows that phrase in bold.
    Any section left as '' is hidden.
 
    Writing an apostrophe inside text?  Put a backslash before it:  I\'m
@@ -294,6 +321,7 @@ const projects=[
     title:'Firefly-inspired biomimetic drones',
     status:'in-progress',
     category:'Engineering & research', date:'2026 – present',
+    role:'',
     summary:'Ongoing work exploring how the biology and behaviour of fireflies can inform the design of small drones.',
     problem:'',
     contribution:'',
@@ -301,46 +329,68 @@ const projects=[
     results:'',
     reflection:'',
     tools:'Biomimetics, Robotics, Research',
-    link:'', image:''
+    link:'', image:'',
+    gallery:[]
   },
   {
     title:'Assistive archery: powered bow-drawing mechanism',
     status:'complete',
-    category:'Biomedical engineering', date:'2025 – 2026',
-    summary:'A team engineering project exploring a powered drawing mechanism and mechanical release to make compound-bow archery more accessible to people with upper-limb differences.',
-    problem:'Drawing, holding and releasing a compound bow requires coordinated force and control. The project explored how a motor-driven winch and a separate mechanical release could support these tasks.',
-    contribution:'My project work included investigating motor and driver options, comparing winch dimensions, and working through the mechanical connection between the motor shaft and drum. This case study focuses on the drawing subsystem within the wider team project.',
-    methods:'Compared geared-motor torque and speed against draw-force and travel requirements. Explored a 24 V brushed DC drive, a 30 mm winch drum, line routing and a mechanical jaw release. Considered emergency stopping, electrical protection and the distinction between calculated targets and measured performance.',
-    results:'Design development and mechanical integration were discussed through June 2026. This case study does not claim a validated draw load, repeatability, user-trial outcome or competition approval.',
-    reflection:'A key engineering challenge was balancing draw force, draw time and drum size while integrating the motor, driver and release mechanism.',
-    tools:'Motor sizing, Mechanical integration, Winch design, Electrical drive selection',
-    link:'', image:''
+    category:'Biomedical engineering', date:'2025 – 2026 · Year 2',
+    role:'Co-project manager · Lead engineer, drawing mechanism · CAD and manufacture of the electronics casing',
+    summary:'A wearable device that lets a wheelchair user with quadruple amputation hold, draw and release a compound bow without help. In an eight-person team, I led the motorised drawing mechanism and designed its casing.',
+    problem:'Archery is one of the most accessible sports, but every existing adaptive aid (mouth tabs, shoulder braces, bow stands, foot-held bows) still needs at least one functional limb to hold the bow or pull the string. People with quadruple amputation and poor dexterity have no independent way to shoot.\n\nThe brief was to let the user grip and draw the string, then release it at will. The team set the target user as a wheelchair-using quad amputee who has kept the elbow and most of the forearm. Safety was the top requirement. The device had to support a 1.2 kg compound bow, sustain a 133 N peak draw load, draw repeatably, and make an accidental release impossible.',
+    contribution:'I was co-project manager and the primary engineer on the drawing mechanism. I researched and selected the motor and driver, sized the winch drum, sourced the drawing-mechanism components, and designed and manufactured the electronics casing in CAD.\n\nThe project was run by eight second-year Biomedical Engineering students with an academic supervisor. The whole team defined the problem and did the background research together. We then split into two sub-teams, one for the holding arm and one for the draw-and-release mechanism, and people moved between them as the project needed. We met at least weekly against an agenda of discussion points and tasks, which made delegation and progress tracking straightforward.',
+    methods:'Device architecture. The device splits a shot into two wearable assemblies. A holding arm replaces the hand: a custom fibreglass prosthetic socket, a friction-locked ball joint, a CNC-machined aluminium adapter and a bow clamp. A shoulder-mounted drawing mechanism replaces the drawing arm. A wheelchair harness braces the torso against the reaction loads.\n\nMotor and driver. I chose a 24 V DC planetary gearmotor with a 188:1 gearbox, which gives the slow, controlled, high-torque pull that drawing needs. It is driven through a GR-MOT1 brushed DC controller, current-limited to 5 A against the motor\'s 6.5 A maximum, so the draw could be built up in increments during testing.\n\nWinch sizing. The drum torque is τ = F × r. For the 133 N peak draw on a 30 mm drum (r = 0.015 m), that is 2.0 N·m. I selected a motor with a large margin above this. The 30 mm drum is a compromise: a larger drum reels in faster but needs a bigger, heavier motor, while a smaller drum needs more turns and risks the cable skipping on the spool.\n\nMotor–winch coupling. The motor shaft and drum did not match. The shaft was modified away from its keyway to keep the original torque-transfer feature, and the drum was secured with a thermal interference fit plus mechanical fastening and adhesive. The parts were machined on manual lathes and mills.\n\nControl and safety. Drawing only runs while the user holds a momentary push button. Release is a separate mechanical trigger on a release aid clipped to the bowstring\'s D-loop, operated by a mouth tab. Because the two are independent, a power loss, emergency stop or electrical fault cannot fire the bow. A supervisor-operated emergency stop sits at the start of the power path.\n\nCasing. The 3D-printed base plate straps onto the harness at the right shoulder and holds the motor at 45° to the shoulder line for comfort and alignment. The cover carries the driver mount and a button face angled at 55° towards the head. A separate enclosure houses the battery and the emergency stop.',
+    results:'The prototype was tested against the Product Specification Document:\n\n• Bow-holding stability at the 133 N draw load: passed, with no deformation, detachment or clamp slippage.\n• Aiming adjustment and string path: passed, with the string clear of the wheelchair, arm and body across the aiming range.\n• Trigger release: passed. The bow released on every deliberate actuation and never on light contact, partial actuation or vibration.\n• Fail-safe behaviour: passed. Power cut, emergency stop and partial trigger presses never released the string under load.\n• Draw repeatability (133 N held for 60 s per draw): partial. The structure held, but the shoulder-mounted casing slipped under full load in a few draws.\n• User-contact edges: partial. The casing edges near the chin-operated button were below the 0.5 mm minimum radius.\n\nThe holding arm\'s ball joint sees about 5.5 N·m against its 10 N·m friction rating, a margin of roughly 45%. A survey of 51 people with limb difference ranked comfort, independence and safety as the most important requirements, which supported the design approach.',
+    reflection:'Engineering. The shoulder interface is the weak point under peak load, so my next steps are a harness that spreads the load more evenly and a smaller motor and gearbox to cut the casing\'s size and weight. The most important missing feature is a draw-length limit switch: a carriage on the cable that trips a normally-closed switch at full draw to stop the motor. Wired to the normally-open contact as well, the same switch could drive a small solenoid to trigger the release automatically. The casing edges also need rounding.\n\nTeamwork. Reaching a final design took longer than planned, which delayed procurement and testing. Clearer delegation earlier would have helped. Splitting into sub-teams allowed detailed development but created knowledge gaps between them, and more frequent whole-team design reviews would keep everyone aligned. Communication was uneven at the start, but the team became more open and constructive as the project went on.',
+    tools:'Motor sizing, Winch design, Motor control, CAD, 3D printing, Lathe and mill machining, Safety-critical design, Requirements testing',
+    link:'', image:'images/archery-drawing-system.jpg',
+    gallery:[
+      {src:'images/archery-drawing-system.jpg', caption:'Drawing system: motor and driver casing with momentary push button, plus a separate battery and emergency-stop enclosure.'},
+      {src:'images/archery-motor-winch.jpg', caption:'Motor–winch coupling in the base of the casing, machined on manual lathes and mills.'},
+      {src:'images/archery-case-cad.png', caption:'CAD of the casing: the 55° angled face for the head-operated button and the space for the motor driver.'},
+      {src:'images/archery-case-cad-cover.png', caption:'CAD of the cover with the trigger-button mount and the cable exit to the battery box.'},
+      {src:'images/archery-release-aid.jpg', caption:'Release aid clipped to the D-loop, connecting the draw cable to the bowstring.'},
+      {src:'images/archery-holding-arm.jpg', caption:'Holding arm assembly: prosthetic socket, ball joint, connecting piece and bow clamp.'}
+    ]
+  },
+  {
+    title:'DIY pulse oximeter',
+    status:'complete',
+    category:'Biomedical engineering', date:'June 2025 · Year 1',
+    role:'Project lead · Electronics lead · Contributed to the code, case design and build',
+    summary:'A working pulse oximeter built around an Arduino Nano and a MAX30101 sensor. It shows heart rate and blood-oxygen saturation (SpO₂) on a two-digit display inside a 3D-printed case. I led the seven-person team and the electronics design.',
+    problem:'The design challenge was to design, program and build a working technology demonstrator for a pulse oximeter, a medical device that measures heart rate (HR) and blood-oxygen saturation (SpO₂). It had to read both values from a biosensor, show them on a display, be easy to use without technical knowledge, and be enclosed to protect the circuit.',
+    contribution:'I led the project and specialised in the electronics: the circuit design, wiring and schematic. I also worked across the code, case design and final assembly.\n\nThe team had seven members from all three Bioengineering streams, each with different strengths. Biomedical students knew electronics, while others were more experienced with laser cutting and 3D printing. We split the work into three parallel streams (circuit, code and casing) so each could be tested and improved independently. Regular meetings, a group chat and a shared folder kept everyone up to date. When we disagreed on how to build the case (laser-cut, 3D-printed, living hinge or sliding lid), we settled it by objective discussion and a vote. When people could not attend sessions, we gave them other tasks instead of letting work stall.',
+    methods:'Circuit. A MAX30101 sensor measures HR and SpO₂ by photoplethysmography: it shines red and infrared light into the fingertip and detects small changes caused by blood flow. It talks to the Arduino Nano over I²C on pins A4 (SDA) and A5 (SCL), with the interrupt pin connected so the code keeps running stably. A two-digit seven-segment display is driven by seven shared segment pins (D2–D8). Each digit\'s common cathode is switched by its own pin (D11, D12), which multiplexes the display with 9 GPIOs instead of 16. 75 Ω resistors protect the segments, and 220 Ω resistors protect the button and LEDs. The device runs from USB or an optional 9 V battery on Vin, so it works plugged in or portable. The circuit was drawn in Altium.\n\nInterface. The display shows heart rate by default and switches to SpO₂ while the button is held. A red LED (HR) and a green LED (SpO₂) show which mode is active.\n\nCode. The firmware uses the SparkFun Bio Sensor Hub library. A truth table maps each digit 0–9 to its segment pattern. Each loop reads the sensor, checks the button, sets the mode LED, then alternates between the tens digit (value ÷ 10) and the ones digit (value mod 10) every 5 ms, fast enough that both appear lit at once. Every step prints to the serial monitor for debugging.\n\nCase. The first case was 3 mm laser-cut plywood with interlocking zig-zag joints, chosen for its rigidity, low cost, electrical insulation and renewable source. With only one sheet available, the walls came out too low because we had underestimated the wire height. Because we had planned for this risk and modelled the whole case in SolidWorks, we could switch to a fully 3D-printed PLA case at 0.2 mm layers, which succeeded on the fifth print. The lid forms a finger slot over the sensor that also blocks ambient light, with a central display window, labelled LED openings and a printed prism that presses the internal button.',
+    results:'• Accuracy: checked against an Apple Watch with two users, at least five readings each. HR agreed within ±2 bpm and SpO₂ within ±1%.\n• Speed: a reading takes about 5–7 seconds after the finger is placed, and switching between modes is instant.\n• Limitations found: readings fluctuated if the finger shifted on the sensor, and the display sometimes lagged.\n• Cost: the printed case used about 183 g of PLA, roughly £3.70 in material.',
+    reflection:'Design. The two-digit display cannot show a heart rate above 99 bpm, which needs a three-digit layout or a warning. Holding the button while keeping a finger on the sensor makes the device impossible to use one-handed, which taught me that accessibility has to be designed in from the start. Next steps would be an internal battery compartment, a larger display, motion-artefact detection and calibration across skin tones. We should also have tested a spare sensor to tell whether the low sensitivity came from the part or the code.\n\nLeadership. We should have prototyped both case options in parallel from day one and measured the circuit together as a team. That would have avoided a dimension error, spread the hands-on work more evenly across seven people, and reduced the pressure when printers were in high demand near the deadline. I also learned that some tasks, like breadboard wiring or a single CAD model, go faster with one owner than with many hands.',
+    tools:'Arduino (C++), MAX30101, I²C, Circuit design, Altium, SolidWorks, 3D printing, Laser cutting',
+    link:'', image:'images/oximeter-final.jpg',
+    gallery:[
+      {src:'images/oximeter-final.jpg', caption:'Final device: breadboard circuit in the 3D-printed base, with the lid showing the finger slot, display window and HR / SpO₂ indicators.'},
+      {src:'images/oximeter-annotated.jpg', caption:'Annotated layout: MAX30101 sensor, Arduino Nano, two-digit display, mode LEDs, button and battery clip.'},
+      {src:'images/oximeter-schematic.png', caption:'Circuit schematic drawn in Altium.'},
+      {src:'images/oximeter-code-flowchart.png', caption:'Firmware logic: initialise, read sensor, check button, set mode LED, multiplex the display.'},
+      {src:'images/oximeter-assembly-drawing.jpg', caption:'SolidWorks technical drawing of the final case assembly.'},
+      {src:'images/oximeter-plywood-iteration.jpg', caption:'First iteration: laser-cut plywood with interlocking joints. The walls were too low for the wiring.'},
+      {src:'images/oximeter-printed-iteration.jpg', caption:'3D-printed PLA iteration, refined into the final case.'}
+    ]
   },
   {
     title:'DNA sequence analysis in Python',
     status:'complete',
-    category:'Software, data & AI', date:'Nov 2025',
-    summary:'Python coursework using an object-oriented DNA class to load, manipulate and search biological sequence data.',
-    problem:'Represent DNA sequences in a reusable class and make common sequence operations accessible through Python methods and operators.',
-    contribution:'Worked through implementation and debugging of a DNA class, including indexing, slicing, string representation and concatenation. Tested file loading and sequence searching using BRCA1 and chromosome 22 FASTA data.',
-    methods:'Used Python classes and special methods to implement sequence behaviour. Investigated file-path and loading errors, checked concatenation in both operand orders, and compared search outputs on different sequence files.',
-    results:'The recorded coursework runs loaded the FASTA files and returned matching indices for a chromosome 22 search. A BRCA1 search returned no matches, exposing a case-sensitivity issue; a corrected result is not recorded in this case study.',
-    reflection:'The debugging process highlighted the importance of consistent input formatting and explicit tests for file loading, operator behaviour and search edge cases.',
-    tools:'Python, Object-oriented programming, FASTA, Debugging',
-    link:'', image:''
-  },
-  {
-    title:'DIY pulse oximeter',
-    status:'coming-soon',
-    category:'Biomedical engineering', date:'',
-    summary:'A self-built pulse oximeter for measuring heart rate and blood-oxygen saturation.',
-    problem:'',
-    contribution:'',
-    methods:'',
-    results:'',
-    reflection:'',
-    tools:'',
-    link:'', image:''
+    category:'Software, data & AI', date:'Nov 2025 · Year 2',
+    role:'Individual coursework',
+    summary:'An object-oriented Python DNA class that loads real genomic data from FASTA files, then indexes, slices, joins and searches it.',
+    problem:'Biological sequences are long strings with their own rules, and raw string handling quickly becomes error-prone. The task was to represent a DNA sequence as a reusable Python class whose objects behave like native Python types. You should be able to index them, slice them, print them and join them with +, and the class should load real data and search it for a given motif.',
+    contribution:'I designed, implemented and debugged the DNA class myself, then tested it on two real datasets: the BRCA1 gene, linked to inherited breast and ovarian cancer risk, and human chromosome 22.',
+    methods:'Special methods. I implemented Python\'s special methods so the class works with native syntax. Indexing and slicing return a single base or a new DNA object. The string representation gives readable output when printing. The + operator concatenates two sequences.\n\nOperand order. I tested concatenation both ways round, DNA + other and other + DNA, because Python resolves these through different methods and a class that only handles one order fails on the other.\n\nLoading data. I wrote a loader for FASTA files, the standard text format for sequences: a header line starting with ">" followed by the sequence split across many lines. I tracked down file-path and loading errors until both datasets loaded reliably.\n\nSearching. I implemented a search that scans the sequence and returns the index of every match of a query motif. I ran it on both datasets and compared the outputs.',
+    results:'• Both FASTA files, BRCA1 and chromosome 22, loaded into DNA objects.\n• Indexing, slicing, printing and concatenation in both operand orders behaved as expected.\n• Searching chromosome 22 returned the matching indices.\n• Searching BRCA1 returned no matches. Tracing it showed a case-sensitivity mismatch: the query and the file used different letter cases, so identical bases did not compare as equal.',
+    reflection:'The BRCA1 result was the most useful part of the project. A search that runs without error but returns nothing is a silent failure, and it is easy to accept as a real result. The fix is to normalise case when sequences are loaded and when queries are made, so the comparison is always like-for-like.\n\nIt taught me to validate inputs at the boundary of a program and to write explicit tests for edge cases (file loading, both operand orders, empty and case-mismatched searches) rather than trusting a run that simply finishes. The same discipline applies to sensor data and lab measurements in my engineering work.',
+    tools:'Python, Object-oriented programming, Special methods, FASTA, Bioinformatics, Debugging, Testing',
+    link:'', image:'',
+    gallery:[]
   },
 ];
 /* ===== End of projects. You don't need to edit anything below this line. ===== */
@@ -397,14 +447,25 @@ function renderRegister(){
     r.append(row);
   }
 }
+function richText(text){
+  const box=el('div',{class:'txt'});
+  for(const para of String(text).split(/\n\s*\n/)){
+    const m=para.match(/^([A-Z][^.\n]{1,40}\.)\s([\s\S]*)$/);
+    box.append(m?el('p',{},[el('strong',{textContent:m[1]}),' '+m[2]]):el('p',{textContent:para}));
+  }
+  return box;
+}
 function openDetail(p,i){
   $('d-no').textContent=no(i)+' · '+p.category+(p.date?' · '+p.date:'');
   $('d-chip').replaceChildren(chip(p.status));
   $('d-title').textContent=p.title;
   $('d-summary').textContent=p.summary;
-  $('d-image').replaceChildren(p.image?el('img',{class:'detail-image',src:p.image,alt:p.title}):'');
+  const gal=(p.gallery||[]).filter(g=>g&&g.src);
+  $('d-role').replaceChildren(p.role?el('dl',{class:'role'},[el('dt',{textContent:'My role'}),el('dd',{textContent:p.role})]):'');
+  $('d-image').replaceChildren(p.image&&!gal.length?el('img',{class:'detail-image',src:p.image,alt:p.title}):'');
+  $('d-gallery').replaceChildren(...(gal.length?[el('p',{class:'label figs-head',textContent:'Figures'}),el('div',{class:'figs'},gal.map((g,k)=>el('figure',{},[el('img',{src:g.src,alt:g.caption||p.title,loading:'lazy'}),g.caption?el('figcaption',{},[el('b',{textContent:'FIG. '+(k+1)}),g.caption]):null])))]:[]));
   $('d-tools').replaceChildren(...(p.tools||'').split(',').map(s=>s.trim()).filter(Boolean).map(s=>el('span',{textContent:s})));
-  const secs=sections.filter(([k])=>p[k]).map(([k,l])=>el('section',{},[el('h3',{textContent:l}),el('p',{textContent:p[k]})]));
+  const secs=sections.filter(([k])=>p[k]).map(([k,l])=>el('section',{},[el('h3',{textContent:l}),richText(p[k])]));
   $('d-sections').replaceChildren(...(secs.length?secs:[el('p',{class:'pending',textContent:p.status==='in-progress'?'Work in progress. A full write-up will follow as the project develops.':'Full case study coming soon.'})]));
   $('d-link').replaceChildren(p.link?el('a',{class:'btn',href:p.link,target:'_blank',rel:'noopener noreferrer'},['View supporting work',icon('i-ext',15)]):'');
   const d=$('detail');

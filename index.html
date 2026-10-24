@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kawoon Bawar Portfolio</title>
+<meta name="description" content="Biomedical Engineering at Imperial College London. Project case studies, research and experience. MEng 2028.">
+<style>
+/* Layout: ported from the original site — header bar, intro + navy profile panel, project grid, about/timeline, footer. */
+:root{
+  --bg:#fafcff;--surface:#ffffff;--fg:#152339;--muted:#526176;--muted2:#67768b;--eyebrow:#506987;
+  --line:#d9e2ef;--line2:#ccd7e5;--accent:#315cd6;--accent-hover:#2148b5;--accent-soft:#e8efff;--accent-ink:#214da8;
+  --avail-bg:#eaf0ff;--avail-fg:#284f9c;--avail-bar:#4166d9;
+  --panel:#142740;--panel-fg:#ffffff;--panel-muted:#c3d0e2;--panel-line:#44536b;--panel-top:#527af1;
+  --cover:#edf2fb;--cover-ink:#6380ad;--cover-num:#9cafcc;--pill:#edf2f8;--pill-fg:#50647f;
+  --backdrop:rgba(16,29,53,.69);--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0d1626;--surface:#13203a;--fg:#e6edf8;--muted:#a8b6ca;--muted2:#8e9db3;--eyebrow:#8fa6c6;
+  --line:#26354f;--line2:#33456a;--accent:#5b84f0;--accent-hover:#7396f5;--accent-soft:#1d2f55;--accent-ink:#a9c0ff;
+  --avail-bg:#172a4f;--avail-fg:#b5c8ff;--avail-bar:#5b84f0;
+  --panel:#0a1322;--panel-fg:#ffffff;--panel-muted:#a9b9d0;--panel-line:#2e3d57;--panel-top:#5b84f0;
+  --cover:#182846;--cover-ink:#7f9bc9;--cover-num:#4f6a96;--pill:#1d2c47;--pill-fg:#a8b8d0;
+  --backdrop:rgba(3,7,15,.78);color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d1626;--surface:#13203a;--fg:#e6edf8;--muted:#a8b6ca;--muted2:#8e9db3;--eyebrow:#8fa6c6;
+  --line:#26354f;--line2:#33456a;--accent:#5b84f0;--accent-hover:#7396f5;--accent-soft:#1d2f55;--accent-ink:#a9c0ff;
+  --avail-bg:#172a4f;--avail-fg:#b5c8ff;--avail-bar:#5b84f0;
+  --panel:#0a1322;--panel-fg:#ffffff;--panel-muted:#a9b9d0;--panel-line:#2e3d57;--panel-top:#5b84f0;
+  --cover:#182846;--cover-ink:#7f9bc9;--cover-num:#4f6a96;--pill:#1d2c47;--pill-fg:#a8b8d0;
+  --backdrop:rgba(3,7,15,.78);color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.6;color:var(--fg);background:var(--bg);font-synthesis:none}
+a{color:inherit;text-decoration:none}
+button{border:0;background:transparent;color:inherit;cursor:pointer;font:inherit;padding:0}
+button,a{transition:background .15s,color .15s}
+button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+svg{display:block}
+.wrap{max-width:1280px;margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+@media(min-width:801px){.wrap{padding-left:max(48px,env(safe-area-inset-left,0px));padding-right:max(48px,env(safe-area-inset-right,0px))}}
+
+header.top{background:var(--surface);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-block:23px;max-width:none}
+.brand{display:flex;gap:13px;align-items:center;font-weight:700}
+.brand small{display:block;font-size:11px;letter-spacing:.13em;color:var(--muted2);font-weight:700}
+.monogram{background:#172943;color:#fff;padding:8px 10px;font-size:20px;line-height:1.2}
+nav{display:flex;align-items:center;gap:28px;font-size:14px}
+nav a:hover{color:var(--accent)}
+
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--eyebrow);margin:0 0 17px;text-transform:uppercase}
+.intro{display:grid;grid-template-columns:1.5fr 1fr;gap:80px;padding:65px 0 58px;align-items:center}
+.intro>div{min-width:0}
+.intro h1{font-size:clamp(36px,4.7vw,62px);line-height:1.08;letter-spacing:-.045em;font-weight:650;margin:0 0 24px;text-wrap:balance}
+.intro h1 span{color:var(--muted)}
+.intro-copy{max-width:545px;color:var(--muted);font-size:18px;margin:0}
+.availability{display:inline-flex;gap:12px;flex-wrap:wrap;background:var(--avail-bg);color:var(--avail-fg);padding:10px 14px;font-size:14px;border-left:3px solid var(--avail-bar);margin-top:22px}
+.profile-panel{background:var(--panel);color:var(--panel-fg);padding:32px 34px;border-top:5px solid var(--panel-top);align-self:stretch;display:flex;flex-direction:column;justify-content:space-between}
+.panel-top,.panel-bottom{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-family:var(--mono);color:var(--panel-muted);gap:20px}
+.profile-panel h2{font-size:34px;font-weight:500;line-height:1.2;letter-spacing:-.03em;margin:40px 0 14px}
+.profile-panel p{color:var(--panel-muted);margin:0}
+.panel-bottom{border-top:1px solid var(--panel-line);padding-top:23px;margin-top:25px}
+
+.section-heading{display:flex;justify-content:space-between;gap:20px;align-items:center}
+.section-heading h2{font-size:32px;margin:0;font-weight:600;letter-spacing:-.04em}
+.section-heading .eyebrow{margin-bottom:8px}
+.count{color:var(--muted2);font-size:18px;margin-left:9px;font-family:var(--mono);font-weight:400}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--line);margin-top:25px;padding-bottom:15px}
+.tabs button{padding:6px 12px;color:var(--muted);font-size:14px;border-radius:4px}
+.tabs button:hover{color:var(--fg)}
+.tabs button.active{background:var(--accent-soft);color:var(--accent-ink)}
+.project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin:24px 0 50px}
+.project-card{border:1px solid var(--line);background:var(--surface);overflow:hidden;display:flex;flex-direction:column}
+.project-card>img{height:200px;width:100%;object-fit:cover;display:block}
+.detail-image{width:100%;max-height:400px;object-fit:contain;margin-top:20px}
+.project-cover{height:160px;background:var(--cover);padding:28px;display:flex;align-items:center;justify-content:space-between;color:var(--cover-ink)}
+.project-cover span{font-size:55px;line-height:1;font-family:var(--mono);color:var(--cover-num)}
+.card-body{padding:25px;display:flex;flex-direction:column;flex:1}
+.card-meta{font-size:12px;color:var(--eyebrow)}
+.card-body h3{margin:12px 0;font-size:24px;line-height:1.3;font-weight:600;text-wrap:balance}
+.card-body h3 button{text-align:left}
+.card-body h3 button:hover{color:var(--accent)}
+.card-body p{color:var(--muted);margin:0 0 18px;flex:1}
+.card-footer{display:flex;justify-content:space-between;align-items:center;gap:15px;border-top:1px solid var(--line);padding-top:15px;font-size:14px;color:var(--muted2)}
+.link-btn{display:flex;align-items:center;gap:7px;color:var(--accent);font-size:14px}
+.link-btn:hover{color:var(--accent-hover)}
+.empty{border:1px dashed var(--line2);background:var(--cover);text-align:center;padding:40px 24px;margin:24px 0 50px;color:var(--muted)}
+
+.about{display:grid;grid-template-columns:1fr 1.1fr;gap:85px;padding:58px 0;border-top:1px solid var(--line)}
+.about>div{min-width:0}
+.about h2{font-size:32px;line-height:1.25;letter-spacing:-.03em;font-weight:550;margin:0 0 22px}
+.about p{color:var(--muted)}
+.skills{display:flex;flex-wrap:wrap;gap:9px;margin:24px 0}
+.skills span{border:1px solid var(--line);background:var(--surface);font-size:14px;padding:5px 12px}
+.timeline article{display:flex;gap:20px;margin-bottom:29px}
+.timeline svg{width:21px;height:21px;flex-shrink:0;color:var(--accent);margin-top:5px}
+.timeline .eyebrow{font-size:12px;margin:0}
+.timeline h3{font-size:18px;font-weight:600;margin:4px 0}
+.timeline p{font-size:14px;margin:3px 0}
+.muted{color:var(--muted2)!important}
+footer{display:flex;justify-content:space-between;gap:25px;border-top:1px solid var(--line);padding:32px 0;margin-top:48px;font-size:13px;color:var(--muted2)}
+footer p{margin:4px 0}
+footer strong{color:var(--fg)}
+
+dialog{border:0;padding:0;background:transparent;max-width:850px;width:calc(100% - 32px);max-height:90vh;color:var(--fg)}
+dialog::backdrop{background:var(--backdrop)}
+.modal{position:relative;background:var(--surface);padding:45px;max-height:90vh;overflow-y:auto}
+.close{position:absolute;right:16px;top:16px;padding:6px;border-radius:4px;color:var(--muted)}
+.close:hover{background:var(--accent-soft);color:var(--fg)}
+.modal h2{font-size:34px;line-height:1.2;margin:20px 0;letter-spacing:-.02em;text-wrap:balance}
+.modal h3{font-size:21px;font-weight:600;margin:26px 0 8px}
+.modal p{color:var(--muted);white-space:pre-wrap;overflow-wrap:anywhere;margin:0}
+.modal .lead{font-size:18px}
+.primary{display:inline-flex;align-items:center;gap:9px;color:#fff;background:var(--accent);padding:11px 19px;border-radius:4px;font-size:14px;font-weight:600;margin-top:24px}
+.primary:hover{background:var(--accent-hover)}
+
+@media(max-width:800px){
+  header.top .wrap{padding-block:18px}
+  nav{gap:16px}
+  .intro{gap:30px;grid-template-columns:1fr;padding-top:40px}
+  .profile-panel{display:none}
+  .intro h1{font-size:44px}
+  .about{grid-template-columns:1fr;gap:30px;padding-top:40px}
+  .project-grid{grid-template-columns:1fr}
+  .brand small{font-size:10px}
+  footer{flex-direction:column}
+  .modal{padding:40px 22px 30px}
+  .modal h2{font-size:28px}
+  .section-heading h2{font-size:28px}
+  .tabs{gap:2px}
+  .tabs button{padding:6px 8px;font-size:13px}
+}
+@media(max-width:420px){nav{display:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-cap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.42 10.92a1 1 0 0 0-.02-1.84L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.83l8.57 3.91a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></symbol>
+  <symbol id="i-case" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Kawoon Bawar home"><span class="monogram">KB</span><span>Kawoon Bawar<small>ENGINEERING PORTFOLIO</small></span></a>
+    <nav><a href="#projects">Projects</a><a href="#about">About</a></nav>
+  </div>
+</header>
+
+<main class="wrap" id="top">
+  <!-- ✏️ EDIT: Intro text and the navy profile panel -->
+  <section class="intro">
+    <div>
+      <p class="eyebrow">Imperial College London · MEng 2028</p>
+      <h1>Engineering.<br><span>From understanding<br>to application.</span></h1>
+      <p class="intro-copy">I’m Kawoon, a Biomedical Engineering student interested in medical technology, engineering research, and software, data &amp; AI.</p>
+      <div class="availability">Summer 2027 internships <span>·</span> Four months available</div>
+    </div>
+    <aside class="profile-panel">
+      <div class="panel-top"><span>PROFILE / 01</span><svg width="28" height="28"><use href="#i-cap"/></svg></div>
+      <div>
+        <h2>Biomedical<br>Engineering</h2>
+        <p>Integrated Master of Engineering<br>Imperial College London<br>2024–2028</p>
+      </div>
+      <div class="panel-bottom"><span>Ipswich &amp; London</span><span>UK</span></div>
+    </aside>
+  </section>
+
+  <section id="projects">
+    <div class="section-heading">
+      <div><p class="eyebrow">Selected work</p><h2>Projects <span class="count" id="count">02</span></h2></div>
+    </div>
+    <div class="tabs" id="tabs" role="group" aria-label="Filter projects"></div>
+    <div id="grid"></div>
+  </section>
+
+  <!-- ✏️ EDIT: Background, skills and the experience timeline.
+       To add a timeline entry, copy one whole <article>...</article> line and change the text. -->
+  <section id="about" class="about">
+    <div>
+      <p class="eyebrow">Background</p>
+      <h2>Technical curiosity.<br>Consistent commitment.</h2>
+      <p>My interests span the physical and computational sides of engineering. Alongside my degree, I have worked in student outreach and played competitive football at Steps 4–7 since the age of 16.</p>
+      <div class="skills"><span>Python</span><span>MATLAB</span><span>Arduino</span><span>AutoCAD</span><span>Excel</span></div>
+    </div>
+    <div class="timeline">
+      <article><svg><use href="#i-cap"/></svg><div><span class="eyebrow">2024–2028</span><h3>Imperial College London</h3><p>Integrated MEng in Biomedical Engineering</p><p class="muted">Year 1: First Class · Year 2: Upper Second Class</p></div></article>
+      <article><svg><use href="#i-case"/></svg><div><span class="eyebrow">Jan 2025–Jan 2026</span><h3>Recruitment &amp; Outreach Ambassador</h3><p>Campus tours, summer schools and Q&amp;As with prospective students, parents and educators.</p><p class="muted">One of approximately 100 selected from nearly 3,000 applicants.</p></div></article>
+      <article><svg><use href="#i-case"/></svg><div><span class="eyebrow">Dec 2022–Sep 2024</span><h3>McDonald’s · Crew Member</h3><p>Approximately 1,400 hours of customer-facing work and teamwork alongside education.</p></div></article>
+      <article><svg><use href="#i-trophy"/></svg><div><span class="eyebrow">Since age 16</span><h3>Competitive football · Steps 4–7</h3><p>Sustained commitment to competitive football alongside academic study.</p></div></article>
+    </div>
+  </section>
+
+  <!-- ✏️ EDIT: Footer -->
+  <footer>
+    <div><strong>Kawoon Bawar</strong><p>Biomedical engineering · Research · Software, data &amp; AI</p></div>
+    <p>Available summer 2027 · Ipswich &amp; London</p>
+  </footer>
+</main>
+
+<dialog id="detail" aria-labelledby="d-title">
+  <div class="modal">
+    <button class="close" id="d-close" aria-label="Close"><svg width="22" height="22"><use href="#i-x"/></svg></button>
+    <p class="eyebrow" id="d-meta"></p>
+    <h2 id="d-title"></h2>
+    <p class="lead" id="d-summary"></p>
+    <div class="skills" id="d-tools"></div>
+    <div id="d-sections"></div>
+    <div id="d-link"></div>
+  </div>
+</dialog>
+
+<script>
+/* =====================================================================
+   ✏️ EDIT YOUR PROJECTS HERE
+   ---------------------------------------------------------------------
+   Each project sits between { and }, followed by a comma.
+   To ADD a project: copy a whole { ... }, block, paste it below the
+   last one, and change the text. Projects show in the order listed.
+   To REMOVE a project: delete its whole { ... }, block.
+
+   category  must be one of: 'Biomedical engineering',
+             'Engineering & research', 'Software, data & AI'
+   tools     comma-separated; each becomes a tag
+   link      optional web link (report, GitHub, video). Leave '' for none.
+   image     optional picture. Upload it to the images folder, then
+             write e.g. 'images/archery.jpg'. Leave '' for none.
+   Any section left as '' is simply hidden.
+
+   Writing an apostrophe inside text?  Put a backslash before it:  I\'m
+   ===================================================================== */
+const projects=[
+  {
+    title:'Assistive archery: powered bow-drawing mechanism',
+    category:'Biomedical engineering', date:'2025–2026',
+    summary:'A team engineering project exploring a powered drawing mechanism and mechanical release to make compound-bow archery more accessible to people with upper-limb differences.',
+    problem:'Drawing, holding and releasing a compound bow requires coordinated force and control. The project explored how a motor-driven winch and a separate mechanical release could support these tasks.',
+    contribution:'My project work included investigating motor and driver options, comparing winch dimensions, and working through the mechanical connection between the motor shaft and drum. This case study focuses on the drawing subsystem within the wider team project.',
+    methods:'Compared geared-motor torque and speed against draw-force and travel requirements. Explored a 24 V brushed DC drive, a 30 mm winch drum, line routing and a mechanical jaw release. Considered emergency stopping, electrical protection and the distinction between calculated targets and measured performance.',
+    results:'Design development and mechanical integration were discussed through June 2026. This case study does not claim a validated draw load, repeatability, user-trial outcome or competition approval.',
+    reflection:'A key engineering challenge was balancing draw force, draw time and drum size while integrating the motor, driver and release mechanism.',
+    tools:'Motor sizing, Mechanical integration, Winch design, Electrical drive selection',
+    link:'', image:''
+  },
+  {
+    title:'DNA sequence analysis in Python',
+    category:'Software, data & AI', date:'November 2025',
+    summary:'Python coursework using an object-oriented DNA class to load, manipulate and search biological sequence data.',
+    problem:'Represent DNA sequences in a reusable class and make common sequence operations accessible through Python methods and operators.',
+    contribution:'Worked through implementation and debugging of a DNA class, including indexing, slicing, string representation and concatenation. Tested file loading and sequence searching using BRCA1 and chromosome 22 FASTA data.',
+    methods:'Used Python classes and special methods to implement sequence behaviour. Investigated file-path and loading errors, checked concatenation in both operand orders, and compared search outputs on different sequence files.',
+    results:'The recorded coursework runs loaded the FASTA files and returned matching indices for a chromosome 22 search. A BRCA1 search returned no matches, exposing a case-sensitivity issue; a corrected result is not recorded in this case study.',
+    reflection:'The debugging process highlighted the importance of consistent input formatting and explicit tests for file loading, operator behaviour and search edge cases.',
+    tools:'Python, Object-oriented programming, FASTA, Debugging',
+    link:'', image:''
+  }
+];
+/* ===== End of projects. You don't need to edit anything below this line. ===== */
+const categories=['All projects','Biomedical engineering','Engineering & research','Software, data & AI'];
+const sections=[['problem','The problem'],['contribution','My contribution'],['methods','Approach & methods'],['results','Results & evidence'],['reflection','What I learned']];
+let filter='All projects';
+const $=id=>document.getElementById(id);
+const el=(tag,props={},kids=[])=>{const n=document.createElement(tag);Object.assign(n,props);for(const k of [].concat(kids))n.append(k);return n;};
+const icon=(id,size)=>{const s=document.createElementNS('http://www.w3.org/2000/svg','svg');s.setAttribute('width',size);s.setAttribute('height',size);const u=document.createElementNS('http://www.w3.org/2000/svg','use');u.setAttribute('href','#'+id);s.append(u);return s;};
+
+function renderTabs(){
+  const t=$('tabs');t.replaceChildren();
+  for(const c of categories){
+    const b=el('button',{type:'button',textContent:c,className:filter===c?'active':''});
+    b.setAttribute('aria-pressed',filter===c);
+    b.onclick=()=>{filter=c;renderTabs();renderGrid();};
+    t.append(b);
+  }
+}
+function renderGrid(){
+  const g=$('grid');g.replaceChildren();
+  const shown=projects.map((p,i)=>[p,i]).filter(([p])=>filter==='All projects'||p.category===filter);
+  if(!shown.length){g.append(el('div',{className:'empty',textContent:'No projects in this discipline yet. Case studies coming soon.'}));return;}
+  const grid=el('div',{className:'project-grid'});
+  for(const [p,i] of shown){
+    const cover=p.image?el('img',{src:p.image,alt:p.title,loading:'lazy'}):el('div',{className:'project-cover'},[icon('i-layers',42),el('span',{textContent:String(i+1).padStart(2,'0')})]);
+    const open=()=>openDetail(p);
+    const titleBtn=el('button',{type:'button',textContent:p.title,onclick:open});
+    const more=el('button',{type:'button',className:'link-btn',onclick:open},['Read case study',icon('i-arrow',16)]);
+    more.setAttribute('aria-label','Read case study: '+p.title);
+    const body=el('div',{className:'card-body'},[
+      el('div',{className:'card-meta',textContent:p.category}),
+      el('h3',{},titleBtn),
+      el('p',{textContent:p.summary}),
+      el('div',{className:'card-footer'},[el('span',{textContent:p.date}),more])
+    ]);
+    grid.append(el('article',{className:'project-card'},[cover,body]));
+  }
+  g.append(grid);
+}
+function openDetail(p){
+  $('d-meta').textContent=p.category+' · '+p.date;
+  $('d-title').textContent=p.title;
+  $('d-summary').textContent=p.summary;
+  const old=document.querySelector('.detail-image');if(old)old.remove();
+  if(p.image)$('d-summary').after(el('img',{className:'detail-image',src:p.image,alt:p.title}));
+  $('d-tools').replaceChildren(...p.tools.split(',').map(s=>s.trim()).filter(Boolean).map(s=>el('span',{textContent:s})));
+  $('d-sections').replaceChildren(...sections.filter(([k])=>p[k]).map(([k,l])=>el('section',{},[el('h3',{textContent:l}),el('p',{textContent:p[k]})])));
+  $('d-link').replaceChildren();
+  if(p.link){const a=el('a',{className:'primary',href:p.link,target:'_blank',rel:'noopener noreferrer'},['View supporting work',icon('i-ext',16)]);$('d-link').append(a);}
+  const d=$('detail');
+  if(typeof d.showModal==='function')d.showModal();else d.setAttribute('open','');
+  d.querySelector('.modal').scrollTop=0;
+}
+$('d-close').onclick=()=>$('detail').close();
+$('detail').addEventListener('click',e=>{if(e.target===$('detail'))$('detail').close();});
+$('count').textContent=String(projects.length).padStart(2,'0');
+renderTabs();renderGrid();
+</script>
+</body>
+</html>

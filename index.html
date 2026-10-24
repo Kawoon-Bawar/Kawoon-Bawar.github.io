@@ -304,10 +304,12 @@ dialog::backdrop{background:rgba(30,41,59,.55);backdrop-filter:blur(2px)}
    tools     comma-separated; each becomes a tag
    link      optional web link (report, GitHub, video). '' for none.
    role      your role, shown at the top of the case study. '' to hide.
-   image     cover picture (shown in the project list), e.g.
-             'images/archery.jpg'. '' for none.
+   image     cover picture (shown in the project list). Upload the
+             picture to the main page of your repository (Add file →
+             Upload files), then write its exact name, e.g.
+             'archery.jpg'. '' for none.
    gallery   pictures shown inside the case study, each written as
-             {src:'images/photo.jpg', caption:'What it shows.'},
+             {src:'photo.jpg', caption:'What it shows.'},
              Leave as [] for none.
    In the text, a blank line (\n\n) starts a new paragraph, and a
    paragraph that starts with a short phrase and a full stop, like
@@ -344,14 +346,14 @@ const projects=[
     results:'The prototype was tested against the Product Specification Document:\n\n• Bow-holding stability at the 133 N draw load: passed, with no deformation, detachment or clamp slippage.\n• Aiming adjustment and string path: passed, with the string clear of the wheelchair, arm and body across the aiming range.\n• Trigger release: passed. The bow released on every deliberate actuation and never on light contact, partial actuation or vibration.\n• Fail-safe behaviour: passed. Power cut, emergency stop and partial trigger presses never released the string under load.\n• Draw repeatability (133 N held for 60 s per draw): partial. The structure held, but the shoulder-mounted casing slipped under full load in a few draws.\n• User-contact edges: partial. The casing edges near the chin-operated button were below the 0.5 mm minimum radius.\n\nThe holding arm\'s ball joint sees about 5.5 N·m against its 10 N·m friction rating, a margin of roughly 45%. A survey of 51 people with limb difference ranked comfort, independence and safety as the most important requirements, which supported the design approach.',
     reflection:'Engineering. The shoulder interface is the weak point under peak load, so my next steps are a harness that spreads the load more evenly and a smaller motor and gearbox to cut the casing\'s size and weight. The most important missing feature is a draw-length limit switch: a carriage on the cable that trips a normally-closed switch at full draw to stop the motor. Wired to the normally-open contact as well, the same switch could drive a small solenoid to trigger the release automatically. The casing edges also need rounding.\n\nTeamwork. Reaching a final design took longer than planned, which delayed procurement and testing. Clearer delegation earlier would have helped. Splitting into sub-teams allowed detailed development but created knowledge gaps between them, and more frequent whole-team design reviews would keep everyone aligned. Communication was uneven at the start, but the team became more open and constructive as the project went on.',
     tools:'Motor sizing, Winch design, Motor control, CAD, 3D printing, Lathe and mill machining, Safety-critical design, Requirements testing',
-    link:'', image:'images/archery-drawing-system.jpg',
+    link:'', image:'archery-drawing-system.jpg',
     gallery:[
-      {src:'images/archery-drawing-system.jpg', caption:'Drawing system: motor and driver casing with momentary push button, plus a separate battery and emergency-stop enclosure.'},
-      {src:'images/archery-motor-winch.jpg', caption:'Motor–winch coupling in the base of the casing, machined on manual lathes and mills.'},
-      {src:'images/archery-case-cad.png', caption:'CAD of the casing: the 55° angled face for the head-operated button and the space for the motor driver.'},
-      {src:'images/archery-case-cad-cover.png', caption:'CAD of the cover with the trigger-button mount and the cable exit to the battery box.'},
-      {src:'images/archery-release-aid.jpg', caption:'Release aid clipped to the D-loop, connecting the draw cable to the bowstring.'},
-      {src:'images/archery-holding-arm.jpg', caption:'Holding arm assembly: prosthetic socket, ball joint, connecting piece and bow clamp.'}
+      {src:'archery-drawing-system.jpg', caption:'Drawing system: motor and driver casing with momentary push button, plus a separate battery and emergency-stop enclosure.'},
+      {src:'archery-motor-winch.jpg', caption:'Motor–winch coupling in the base of the casing, machined on manual lathes and mills.'},
+      {src:'archery-case-cad.png', caption:'CAD of the casing: the 55° angled face for the head-operated button and the space for the motor driver.'},
+      {src:'archery-case-cad-cover.png', caption:'CAD of the cover with the trigger-button mount and the cable exit to the battery box.'},
+      {src:'archery-release-aid.jpg', caption:'Release aid clipped to the D-loop, connecting the draw cable to the bowstring.'},
+      {src:'archery-holding-arm.jpg', caption:'Holding arm assembly: prosthetic socket, ball joint, connecting piece and bow clamp.'}
     ]
   },
   {
@@ -366,15 +368,15 @@ const projects=[
     results:'• Accuracy: checked against an Apple Watch with two users, at least five readings each. HR agreed within ±2 bpm and SpO₂ within ±1%.\n• Speed: a reading takes about 5–7 seconds after the finger is placed, and switching between modes is instant.\n• Limitations found: readings fluctuated if the finger shifted on the sensor, and the display sometimes lagged.\n• Cost: the printed case used about 183 g of PLA, roughly £3.70 in material.',
     reflection:'Design. The two-digit display cannot show a heart rate above 99 bpm, which needs a three-digit layout or a warning. Holding the button while keeping a finger on the sensor makes the device impossible to use one-handed, which taught me that accessibility has to be designed in from the start. Next steps would be an internal battery compartment, a larger display, motion-artefact detection and calibration across skin tones. We should also have tested a spare sensor to tell whether the low sensitivity came from the part or the code.\n\nLeadership. We should have prototyped both case options in parallel from day one and measured the circuit together as a team. That would have avoided a dimension error, spread the hands-on work more evenly across seven people, and reduced the pressure when printers were in high demand near the deadline. I also learned that some tasks, like breadboard wiring or a single CAD model, go faster with one owner than with many hands.',
     tools:'Arduino (C++), MAX30101, I²C, Circuit design, Altium, SolidWorks, 3D printing, Laser cutting',
-    link:'', image:'images/oximeter-final.jpg',
+    link:'', image:'oximeter-final.jpg',
     gallery:[
-      {src:'images/oximeter-final.jpg', caption:'Final device: breadboard circuit in the 3D-printed base, with the lid showing the finger slot, display window and HR / SpO₂ indicators.'},
-      {src:'images/oximeter-annotated.jpg', caption:'Annotated layout: MAX30101 sensor, Arduino Nano, two-digit display, mode LEDs, button and battery clip.'},
-      {src:'images/oximeter-schematic.png', caption:'Circuit schematic drawn in Altium.'},
-      {src:'images/oximeter-code-flowchart.png', caption:'Firmware logic: initialise, read sensor, check button, set mode LED, multiplex the display.'},
-      {src:'images/oximeter-assembly-drawing.jpg', caption:'SolidWorks technical drawing of the final case assembly.'},
-      {src:'images/oximeter-plywood-iteration.jpg', caption:'First iteration: laser-cut plywood with interlocking joints. The walls were too low for the wiring.'},
-      {src:'images/oximeter-printed-iteration.jpg', caption:'3D-printed PLA iteration, refined into the final case.'}
+      {src:'oximeter-final.jpg', caption:'Final device: breadboard circuit in the 3D-printed base, with the lid showing the finger slot, display window and HR / SpO₂ indicators.'},
+      {src:'oximeter-annotated.jpg', caption:'Annotated layout: MAX30101 sensor, Arduino Nano, two-digit display, mode LEDs, button and battery clip.'},
+      {src:'oximeter-schematic.png', caption:'Circuit schematic drawn in Altium.'},
+      {src:'oximeter-code-flowchart.png', caption:'Firmware logic: initialise, read sensor, check button, set mode LED, multiplex the display.'},
+      {src:'oximeter-assembly-drawing.jpg', caption:'SolidWorks technical drawing of the final case assembly.'},
+      {src:'oximeter-plywood-iteration.jpg', caption:'First iteration: laser-cut plywood with interlocking joints. The walls were too low for the wiring.'},
+      {src:'oximeter-printed-iteration.jpg', caption:'3D-printed PLA iteration, refined into the final case.'}
     ]
   },
   {

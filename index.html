@@ -335,6 +335,21 @@ const projects=[
     gallery:[]
   },
   {
+    title:'Medical image enhancement in MATLAB and Python',
+    status:'complete',
+    category:'Software, data & AI', date:'Summer 2026',
+    role:'Independent personal project',
+    summary:'A self-directed project applying signal-processing filters, denoising and deep learning to noisy, low-contrast X-ray and MRI images, with results measured by PSNR and SSIM.',
+    problem:'Medical images are only as useful as what a clinician can see in them. The X-ray and MRI scans I worked with, a series of images from a public database, suffered mainly from noise and low contrast, and a few also had artefacts. Noise hides fine structure, and poor contrast makes it hard to tell neighbouring tissues apart.\n\nI wanted to find out how much image quality code can recover, and how to show that an image is really better rather than just different.',
+    contribution:'I worked alone and was responsible for every stage: choosing and preparing the data, implementing the filters and models in MATLAB and Python, running the comparisons, and evaluating the results.',
+    methods:'Filtering. I started from what I had learned in my signals and controls module. An image is a 2D signal, so smoothing it is a convolution with a kernel. A Gaussian filter acts as a low-pass filter: it suppresses high-frequency noise, and its standard deviation sets how strongly. The catch is that edges and fine anatomical detail are also high-frequency, so the main trade-off was removing noise without blurring the structures that matter.\n\nDenoising. I then applied dedicated denoising methods, which aim to remove noise while preserving edges better than a plain Gaussian blur.\n\nDeep learning. Finally, I used a deep-learning approach to denoising and enhancement, to compare a learned method against the classical filters on the same images.\n\nTwo languages. I worked in both MATLAB and Python. MATLAB suits quick, matrix-based signal and image processing, and Python gives access to the wider deep-learning ecosystem.\n\nEvaluation. I judged each result in two ways. The first was visual inspection, which catches over-smoothing and lost detail that a single number can miss. The second was two standard metrics. Peak signal-to-noise ratio, PSNR = 10·log₁₀(MAX² / MSE), measures pixel-level fidelity in decibels, where higher is better. Structural similarity, SSIM, compares luminance, contrast and structure and is closer to how people perceive images. It runs from 0 to 1, where 1 is a perfect match.',
+    results:'• Built a working enhancement pipeline in both MATLAB and Python, covering classical filters, denoising methods and a deep-learning model.\n• Applied it across a series of X-ray and MRI images affected by noise and low contrast, including a small number with artefacts.\n• Compared methods side by side, both visually and with PSNR and SSIM. Using both made clear that a method can score well on one measure while losing detail you can see, so neither should be used alone.',
+    reflection:'What I found most interesting was seeing theory from a signals and controls lecture turn directly into a tool that could help with a real medical task. A Gaussian kernel stops being an equation and becomes something that decides whether a fine structure in a scan stays visible.\n\nThe project also showed me that "better" has to be defined before it can be measured, which is why I paired visual checks with PSNR and SSIM. As next steps, I would add contrast-enhancement methods aimed directly at the low-contrast images, test on a larger and more varied set of scans, and look more closely at the images with artefacts.',
+    tools:'MATLAB, Python, Image processing, Gaussian filtering, Denoising, Deep learning, PSNR, SSIM',
+    link:'', image:'',
+    gallery:[]
+  },
+  {
     title:'Assistive archery: powered bow-drawing mechanism',
     status:'complete',
     category:'Biomedical engineering', date:'2025 – 2026 · Year 2',
@@ -355,6 +370,21 @@ const projects=[
       {src:'archery-release-aid.jpg', caption:'Release aid clipped to the D-loop, connecting the draw cable to the bowstring.'},
       {src:'archery-holding-arm.jpg', caption:'Holding arm assembly: prosthetic socket, ball joint, connecting piece and bow clamp.'}
     ]
+  },
+  {
+    title:'DNA sequence analysis in Python',
+    status:'complete',
+    category:'Software, data & AI', date:'Nov 2025 · Year 2',
+    role:'Individual coursework',
+    summary:'An object-oriented Python DNA class that loads real genomic data from FASTA files, then indexes, slices, joins and searches it.',
+    problem:'Biological sequences are long strings with their own rules, and raw string handling quickly becomes error-prone. The task was to represent a DNA sequence as a reusable Python class whose objects behave like native Python types. You should be able to index them, slice them, print them and join them with +, and the class should load real data and search it for a given motif.',
+    contribution:'I designed, implemented and debugged the DNA class myself, then tested it on two real datasets: the BRCA1 gene, linked to inherited breast and ovarian cancer risk, and human chromosome 22.',
+    methods:'Special methods. I implemented Python\'s special methods so the class works with native syntax. Indexing and slicing return a single base or a new DNA object. The string representation gives readable output when printing. The + operator concatenates two sequences.\n\nOperand order. I tested concatenation both ways round, DNA + other and other + DNA, because Python resolves these through different methods and a class that only handles one order fails on the other.\n\nLoading data. I wrote a loader for FASTA files, the standard text format for sequences: a header line starting with ">" followed by the sequence split across many lines. I tracked down file-path and loading errors until both datasets loaded reliably.\n\nSearching. I implemented a search that scans the sequence and returns the index of every match of a query motif. I ran it on both datasets and compared the outputs.',
+    results:'• Both FASTA files, BRCA1 and chromosome 22, loaded into DNA objects.\n• Indexing, slicing, printing and concatenation in both operand orders behaved as expected.\n• Searching chromosome 22 returned the matching indices.\n• Searching BRCA1 returned no matches. Tracing it showed a case-sensitivity mismatch: the query and the file used different letter cases, so identical bases did not compare as equal.',
+    reflection:'The BRCA1 result was the most useful part of the project. A search that runs without error but returns nothing is a silent failure, and it is easy to accept as a real result. The fix is to normalise case when sequences are loaded and when queries are made, so the comparison is always like-for-like.\n\nIt taught me to validate inputs at the boundary of a program and to write explicit tests for edge cases (file loading, both operand orders, empty and case-mismatched searches) rather than trusting a run that simply finishes. The same discipline applies to sensor data and lab measurements in my engineering work.',
+    tools:'Python, Object-oriented programming, Special methods, FASTA, Bioinformatics, Debugging, Testing',
+    link:'', image:'',
+    gallery:[]
   },
   {
     title:'DIY pulse oximeter',
@@ -378,21 +408,6 @@ const projects=[
       {src:'oximeter-plywood-iteration.jpg', caption:'First iteration: laser-cut plywood with interlocking joints. The walls were too low for the wiring.'},
       {src:'oximeter-printed-iteration.jpg', caption:'3D-printed PLA iteration, refined into the final case.'}
     ]
-  },
-  {
-    title:'DNA sequence analysis in Python',
-    status:'complete',
-    category:'Software, data & AI', date:'Nov 2025 · Year 2',
-    role:'Individual coursework',
-    summary:'An object-oriented Python DNA class that loads real genomic data from FASTA files, then indexes, slices, joins and searches it.',
-    problem:'Biological sequences are long strings with their own rules, and raw string handling quickly becomes error-prone. The task was to represent a DNA sequence as a reusable Python class whose objects behave like native Python types. You should be able to index them, slice them, print them and join them with +, and the class should load real data and search it for a given motif.',
-    contribution:'I designed, implemented and debugged the DNA class myself, then tested it on two real datasets: the BRCA1 gene, linked to inherited breast and ovarian cancer risk, and human chromosome 22.',
-    methods:'Special methods. I implemented Python\'s special methods so the class works with native syntax. Indexing and slicing return a single base or a new DNA object. The string representation gives readable output when printing. The + operator concatenates two sequences.\n\nOperand order. I tested concatenation both ways round, DNA + other and other + DNA, because Python resolves these through different methods and a class that only handles one order fails on the other.\n\nLoading data. I wrote a loader for FASTA files, the standard text format for sequences: a header line starting with ">" followed by the sequence split across many lines. I tracked down file-path and loading errors until both datasets loaded reliably.\n\nSearching. I implemented a search that scans the sequence and returns the index of every match of a query motif. I ran it on both datasets and compared the outputs.',
-    results:'• Both FASTA files, BRCA1 and chromosome 22, loaded into DNA objects.\n• Indexing, slicing, printing and concatenation in both operand orders behaved as expected.\n• Searching chromosome 22 returned the matching indices.\n• Searching BRCA1 returned no matches. Tracing it showed a case-sensitivity mismatch: the query and the file used different letter cases, so identical bases did not compare as equal.',
-    reflection:'The BRCA1 result was the most useful part of the project. A search that runs without error but returns nothing is a silent failure, and it is easy to accept as a real result. The fix is to normalise case when sequences are loaded and when queries are made, so the comparison is always like-for-like.\n\nIt taught me to validate inputs at the boundary of a program and to write explicit tests for edge cases (file loading, both operand orders, empty and case-mismatched searches) rather than trusting a run that simply finishes. The same discipline applies to sensor data and lab measurements in my engineering work.',
-    tools:'Python, Object-oriented programming, Special methods, FASTA, Bioinformatics, Debugging, Testing',
-    link:'', image:'',
-    gallery:[]
   },
 ];
 /* ===== End of projects. You don't need to edit anything below this line. ===== */
